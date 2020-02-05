@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="./test.css">
+  </head>
+  <body>
+    <div class="login">
+      <div class="form">
+        <div class="tab">
+          <button class="tablinks" onclick="openCity(event, 'London')" id='defaultOpen'>Student</button>
+          <button class="tablinks" onclick="openCity(event, 'Paris')">Teacher</button>
+        </div>
+
+
+
+        <div id='London' class="tabcontent">
+          <form class="register-form" id='abc'>
+            <p><b>Student SIgnup</b></p>
+            <input type="text" placeholder="Name">
+            <input type="text" placeholder="Field">
+            <input type="text" placeholder="Domain">
+            <button type="button" name="button">Submit</button>
+            <p class="message">Already Registered? <a href="#">Login</a></p>
+          </form>
+        </div>
+
+          <form class="register-form" class="login-form">
+            <p><b>Login</b></p>
+            <input type="text" placeholder="Username">
+            <input type="password" placeholder="Password">
+            <button type="button" name="button">Submit</button>
+            <p class="message">Haven't registered <a href="#">SignUp</a></p>
+          </form>
+
+        <div id='Paris' class="tabcontent">
+          <form class="login-form" id="pqr">
+            <p><b>Teacher SignUp</b></p>
+            <input type="text" placeholder="Username">
+            <input type="password" placeholder="Password">
+            <button type="button" name="button">Submit</button>
+            <p class="message">Haven't Registered? <a href="#">Register</a></p>
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js'> </script>
+
+    <script type="text/javascript">
+      $('.message a').click(function(){
+        $('.register-form').animate({height:"toggle"},"medium");
+      });
+    </script>
+
+    <script type="text/javascript">
+      $('.message a').click(function(){
+        $('.login-form').animate({height:"toggle"},"medium");
+      });
+    </script>
+
+    <script>
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "flex";
+  evt.currentTarget.className += " active";
+}
+
+document.getElementById("defaultOpen").click();
+</script>
+
+  </body>
+</html>

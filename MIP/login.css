@@ -1,0 +1,64 @@
+body{
+  background-color: white;
+  background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url('./study.jpg');
+
+}
+
+.login{
+  width: 360px;
+  padding: 10% 0 0;
+  margin:auto;
+
+}
+
+.form{
+  position: relative;
+  z-index:1;
+  background: rgba(0, 119, 119, 0.8);
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  padding-top: 20px;
+  text-align:center;
+  border-radius: 10%;
+
+
+}
+
+.form input{
+  width:100%;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  border: 0;
+  padding: 15px;
+  margin: 0 0 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.form button{
+  background: #4CAF50;
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  padding:15px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.form button:hover{
+  opacity:0.8;
+}
+
+.register-form{
+  display: none;
+}
+
+form p{
+  font-size: 20px;
+  color: white;
+}
+
+form a{
+  color:red;
+}
