@@ -1,0 +1,104 @@
+body{
+  background-color: white;
+  background-image: url(https://total-school.cmsmasters.net/wp-content/uploads/2016/09/landing-1.jpg);
+
+}
+
+.login{
+  width: 360px;
+  padding: 10% 0 0;
+  margin:auto;
+
+}
+
+.form{
+  position: relative;
+  z-index:1;
+  background: rgba(0, 119, 119);
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  padding-top: 0px;
+  text-align:center;
+}
+
+.form input{
+  width:100%;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  border: 0;
+  padding: 15px;
+  margin: 0 0 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.form button{
+  background: #4CAF50;
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  padding:15px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.form button:hover{
+  opacity:0.8;
+}
+
+
+
+form p{
+  font-size: 20px;
+  color: white;
+}
+
+form a{
+  color:red;
+}
+
+.tab {
+  overflow: hidden;
+  
+  background-color: rgba(0, 119, 119);
+  text-align: center;
+  width: 190px;
+  margin: auto;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+  width: auto;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  border-top: none;
+}
+
+#abc{
+  display: none;
+}
+
+#pqr{
+  display: none;
+}
