@@ -218,9 +218,12 @@ app.get('/home',(req,res)=>{
    console.log(req.session.tea_login);
    if(req.session.tea_login){
       res.sendFile(path.join(__dirname + '/index.html'));
+      //req.session.tea_login = false;
    }
    else if(req.session.stu_login){
       res.sendFile(path.join(__dirname + '/index.html'));
+      //req.session.stu_login = false;
+
    }
    else{
       res.send("404 not found");
