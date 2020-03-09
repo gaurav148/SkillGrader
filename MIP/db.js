@@ -20,12 +20,14 @@ var db = mysql.createConnection({
 
 
 app.get('/',(request, response) =>{
-    response.sendFile(path.join(__dirname + '/test.html'));
-    
-    
+   response.sendFile(path.join(__dirname + '/test.html'));
 });
+
+
 app.use(express.urlencoded({ extended: false  }));
 app.use(express.json());
+app.set('view engine', 'ejs');
+
 
 app.use(session({
    secret: 'secret',
@@ -34,7 +36,7 @@ app.use(session({
    
  }));
 
- app.use(express.static(__dirname+'/public'));
+ app.use(express.static(__dirname));
 
     
 
@@ -76,7 +78,7 @@ if(username1){
                };
                db.query('INSERT INTO login_student SET ?',student_data,(err,results,fields)=>{
                if(err) throw err;
-            });
+            });   
             res.redirect('/')
             console.log("student2 added");
          }); 
@@ -87,7 +89,7 @@ if(username1){
          }
       
       
-   });
+   });   
 
    
 
@@ -111,11 +113,12 @@ if(username1){
                   if(result == true){
                      //console.log("success login");
                      req.session.tea_login = true;
+                     req.session.username = username2;
                      //res.redirect('/home');
                      
                      if(req.session.tea_login){
                         console.log("0")
-                        res.redirect('\home');
+                        res.redirect('/mycourses');
                      }
                      
                   }
@@ -217,10 +220,12 @@ app.get('/home',(req,res)=>{
    console.log(req.session.stu_login);
    console.log(req.session.tea_login);
    if(req.session.tea_login){
+      res.send("welcome"+req.session.username);
       res.sendFile(path.join(__dirname + '/index.html'));
       //req.session.tea_login = false;
    }
    else if(req.session.stu_login){
+      console.log(req.session.id);
       res.sendFile(path.join(__dirname + '/index.html'));
       //req.session.stu_login = false;
 
@@ -228,7 +233,68 @@ app.get('/home',(req,res)=>{
    else{
       res.send("404 not found");
    }
+   //req.session.destroy();
 });
+
+
+
+
+app.get('/mycourses',(req,res)=>{
+
+   if(req.session.tea_login){
+
+      let course = new Promise((resolve,reject) =>{
+
+         db.query('select course_teacher from courses',(err,results,fields)=>{
+            for(var i=0;i<results.length;i++){
+               console.log(results[i]);
+               if(req.session.username == results[i].course_teacher){
+                  resolve();
+                  break;
+            }
+            }
+            reject();
+         });
+      });
+      course.then(
+         ()=>{
+            console.log("resolve");
+            res.render('mycourse',{name:req.session.username});
+         },
+         ()=>{
+            console.log("reject");
+            res.render('courses',{name:req.session.username});
+         }
+      )
+   }
+   else{
+      res.send("404 NOT FOUND");
+   }
+   //req.session.destroy();
+   
+
+});
+//add course 
+app.post('/mycourses',(req,res)=>{
+   //const add_course = document.getElementById('add-course')
+   //add_course.addEventListener('click',(req,res)=>{
+      var name = req.body.course_name;
+      var info = req.body.course_info;
+      var course_data = {
+         "course_name":name,
+         "course_info":info,
+         "course_teacher":req.session.username
+      }
+      db.query('insert into courses set ?',course_data,(err,results,fields)=>{
+         if(err) throw err; 
+         res.redirect('\mycourses');  
+      });
+   
+});
+
+
+
+// assignment uploading module
 
 app.listen(3000);
 
