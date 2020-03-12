@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Courses</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="../css/style.css">
+  </head>
+  <body>
+		
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	        </button>
+        </div>
+	  		<div class="img bg-wrap text-center py-4" style="background-image: url(../images/bg_1.jpg);">
+	  			<div class="user-logo">
+	  				<div class="img" style="background-image: url(../images/logo.jpg);"></div>
+	  				<h3>Catriona Henderson</h3>
+	  			</div>
+	  		</div>
+        <ul class="list-unstyled components mb-5">
+          <li>
+            <a href="#"><span class="fa fa-home mr-3"></span> Home</a>
+          </li>
+          <li class="active">
+            <a href="#"><span class="fa fa-book mr-3"></span> Courses</a>
+          </li>
+          <li>
+            <a href="#"><span class="fa fa-cog mr-3"></span> Settings</a>
+          </li>
+          <li>
+            <a href="#"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
+          </li>
+        </ul>
+
+    	</nav>
+
+        <!-- Page Content  -->
+      <div id="content" class="p-4 p-md-5 pt-5">
+        <div class="domains" style="padding-left: 1%; padding-right: 1%;">
+          <div class="card  bg-light mb-3">
+            <h5 class="card-header text-white">DOMAINS</h5>
+            <div class="card-body"><br>
+              <div class="card-deck" style="padding-left: 5%; padding-right: 5%;">
+                <div class="card border border-primary shadow-lg p-3 mb-5 bg-white rounded text-center" style="width:16rem; height: 19rem;">
+                  <img class="card-img-top" src="..\public\images\f.png" alt="Card image cap">
+                  <div class="card-body full-body">
+                    <form action="/film"><button class="card-title btn btn-success" name="film-btn">FILM MAKING</button></form>
+                  </div>
+                </div>
+  
+  
+                  <div class="card border border-primary shadow-lg p-3 mb-5 bg-white rounded text-center" style="width: 16rem; height: 19rem;">
+                    <img   class="card-img-top" src="..\public\images\p.png" alt="Card image cap">
+                    <div class="card-body full-body">
+                        <form action="/photography"><button class="card-title btn btn-success" name="photo-btn" id="photo-btn" type="submit">PHOTOGRAPHY</button></form>
+                      
+                    </div>
+                  </div>
+  
+  
+                    <div class="card border border-primary shadow-lg p-3 mb-5 bg-light rounded text-center" style="width: 16rem; height: 19rem;">
+                      <img id="i1" class="card-img-top" src="..\public\images\e.png" alt="Card image cap">
+                      <div class="card-body full-body">
+                        <form action="/essay"><button class="card-title btn btn-success" name="essay-btn">ESSAY WRITING</button></form>
+  
+                      </div>
+                    </div>
+                    </div>
+  
+                    <div class="card-deck" style="padding-left: 20%; padding-right: 20%;">
+                      <div class="card border border-primary shadow-lg p-3 mb-5 bg-light rounded text-center" style="width: 16rem; height: 19rem;">
+                        <img  class="card-img-top" src="..\public\images\s.png" alt="Card image cap">
+                        <div class="card-body full-body">
+                          <form action="/sketching"><button class="card-title btn btn-success" name="sketch-btn">SKETCHING</button></form>
+                        </div>
+                      </div>
+  
+  
+                        <div class="card border border-primary shadow-lg p-3 mb-5 bg-white rounded text-center" style="width: 10rem; height: 19rem;">
+                          <img class="card-img-top" src="..\public\images\l.png" alt="Card image cap">
+                          <div class="card-body full-body">
+                            <form action="/foreign"><button class="card-title btn btn-success" name="lang-btn">FOREIGN LANGUAGE</button></form>
+                          </div>
+                        </div>
+                        </div>
+            </div>
+          </div>
+          <br>
+  
+  
+        </div>
+		</div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="../db.js"></script>
+  </body>
+</html>

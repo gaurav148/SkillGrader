@@ -23,6 +23,9 @@ app.get('/',(request, response) =>{
    response.sendFile(path.join(__dirname + '/test.html'));
 });
 
+app.get('/1',(request, response) =>{
+   response.render('photography');
+});
 
 app.use(express.urlencoded({ extended: false  }));
 app.use(express.json());
@@ -160,7 +163,7 @@ if(username1){
                //res.redirect('/home');
                if(req.session.stu_login = true){
                   console.log(2);
-                  res.redirect('\home');
+                  res.redirect('/stu_course');
                }
             }
             
@@ -280,10 +283,12 @@ app.post('/mycourses',(req,res)=>{
    //add_course.addEventListener('click',(req,res)=>{
       var name = req.body.course_name;
       var info = req.body.course_info;
+      var domain = req.body.course_domain;
       var course_data = {
          "course_name":name,
          "course_info":info,
-         "course_teacher":req.session.username
+         "course_teacher":req.session.username,
+         "domain":domain
       }
       db.query('insert into courses set ?',course_data,(err,results,fields)=>{
          if(err) throw err; 
@@ -291,6 +296,160 @@ app.post('/mycourses',(req,res)=>{
       });
    
 });
+
+
+
+//Courses module
+app.get('/stu_course',(request, response) =>{
+   if(request.session.stu_login){
+      response.render('stu_courses',{name:request.session.username});
+      
+      
+//       // const button = document.getElementById('photo-btn');
+//       // button.addEventListener('click', function(e) {
+//       // console.log('button was clicked');
+//    }
+//    else{
+//       response.send("404 NOT FOUND");
+   }  
+});
+
+//photography courses
+app.get('/photography',(request, response) =>{
+   if(request.session.stu_login){
+      db.query('select * from courses',(err,results,fields)=>{
+         console.log(results)
+         list = [];
+         //var data={list:[]};
+         //  
+         for(var i=0;i<results.length;i++)
+         {
+            if(results[i].domain == 'photography')
+            {
+               list.push(results[i]);
+            }
+            
+         }
+         response.render('photography',{name:request.session.username,results:list});
+
+      })
+      
+      
+      
+   }  
+});
+
+//film making courses
+app.get('/film',(request, response) =>{
+   if(request.session.stu_login){
+      db.query('select * from courses',(err,results,fields)=>{
+         console.log(results)
+         list = [];
+         //var data={list:[]};
+         //  
+         for(var i=0;i<results.length;i++)
+         {
+            if(results[i].domain == 'film making')
+            {
+               list.push(results[i]);
+            }
+            
+         }
+         response.render('photography',{name:request.session.username,results:list});
+
+      })
+      
+      
+      
+   }  
+});
+
+//essay writing courses
+app.get('/essay',(request, response) =>{
+   if(request.session.stu_login){
+      db.query('select * from courses',(err,results,fields)=>{
+         console.log(results)
+         list = [];
+         //var data={list:[]};
+         //  
+         for(var i=0;i<results.length;i++)
+         {
+            if(results[i].domain == 'essay writing')
+            {
+               list.push(results[i]);
+            }
+            
+         }
+         response.render('photography',{name:request.session.username,results:list});
+
+      })
+      
+      
+      
+   }  
+});
+
+//foreign language courses
+app.get('/foreign',(request, response) =>{
+   if(request.session.stu_login){
+      db.query('select * from courses',(err,results,fields)=>{
+         console.log(results)
+         list = [];
+         //var data={list:[]};
+         //  
+         for(var i=0;i<results.length;i++)
+         {
+            if(results[i].domain == 'foreign language')
+            {
+               list.push(results[i]);
+            }
+            
+         }
+         response.render('photography',{name:request.session.username,results:list});
+
+      })
+      
+      
+      
+   }  
+});
+
+//Sketching courses
+app.get('/sketching',(request, response) =>{
+   if(request.session.stu_login){
+      db.query('select * from courses',(err,results,fields)=>{
+         console.log(results)
+         list = [];
+         //var data={list:[]};
+         //  
+         for(var i=0;i<results.length;i++)
+         {
+            if(results[i].domain == 'sketching')
+            {
+               list.push(results[i]);
+            }
+            
+         }
+         response.render('photography',{name:request.session.username,results:list});
+
+      })
+      
+      
+      
+   }  
+});
+
+
+
+// app.post('/stu_course',(request, response) =>{
+      
+//       const button = document.getElementById('photo-btn');
+//       button.addEventListener('click', function(e) {
+//       console.log('button was clicked');
+// });
+    
+// });
+
 
 
 
