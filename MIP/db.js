@@ -160,6 +160,7 @@ if(username1){
                console.log("pass2");
                //console.log("success login");
                req.session.stu_login = true;
+               req.session.username = username2;
                //res.redirect('/home');
                if(req.session.stu_login = true){
                   console.log(2);
@@ -302,23 +303,60 @@ app.post('/mycourses',(req,res)=>{
 //Courses module
 app.get('/stu_course',(request, response) =>{
    if(request.session.stu_login){
+      //console.log(request.session.username);
+      
       response.render('stu_courses',{name:request.session.username});
-      
-      
-//       // const button = document.getElementById('photo-btn');
-//       // button.addEventListener('click', function(e) {
-//       // console.log('button was clicked');
-//    }
-//    else{
-//       response.send("404 NOT FOUND");
-   }  
+   }
+   });  
+     
+app.post('/stu_course',(req,res)=>{
+   var name = req.body.subscribed_course_name;
+      db.query('select * from courses where course_name = ?',name,(err ,results,fields)=>{
+         var course_id = results[0].course_id;
+         db.query('select id from login_student where username = ?',req.session.username,(err,results,fields)=>{
+            var stu_id = results[0].id;
+            var my_course_data = {
+               "my_course_id":course_id,
+               "my_id":stu_id
+            }
+            db.query('insert into my_subscribed_courses set ?',my_course_data,(err,results,fields)=>{
+              if(err) throw err;
+            });
+       });
+       
+    });
+    
+      res.redirect('/user/mycourses');
+});
+
+app.get('/user/mycourses',(req,res)=>{
+      db.query('select id from login_student where username = ?',req.session.username,(err,results1,fields)=>{
+      //console.log(results);
+      var stu_id = results1[0].id;
+      courses = [];
+      db.query('select my_course_id from my_subscribed_courses where my_id=?',stu_id,(err,results2,fields)=>{
+         //console.log(results);
+         for(var i=0;i<results2.length;i++){
+         var course_id = results2[i].my_course_id;
+         //console.log(course_id);
+         db.query('select * from courses where course_id=?',course_id,(err,results3,fields)=>{
+            console.log(results3);
+            courses.push(results3);
+            if(courses.length == results2.length){
+               console.log(courses);
+               res.render('stu_mycourses',{name:req.session.username,list:courses});
+            }
+         });
+         }
+      });
+   });
 });
 
 //photography courses
 app.get('/photography',(request, response) =>{
    if(request.session.stu_login){
       db.query('select * from courses',(err,results,fields)=>{
-         console.log(results)
+         //console.log(results)
          list = [];
          //var data={list:[]};
          //  
@@ -441,20 +479,11 @@ app.get('/sketching',(request, response) =>{
 
 
 
-// app.post('/stu_course',(request, response) =>{
-      
-//       const button = document.getElementById('photo-btn');
-//       button.addEventListener('click', function(e) {
-//       console.log('button was clicked');
-// });
-    
-// });
-
-
 
 
 // assignment uploading module
 
 app.listen(3000);
+   
 
 
