@@ -1,16 +1,17 @@
 <!doctype html>
 <html lang="en">
   <head>
-  	<title>Stu_mycourses</title>
+  	<title>Photography</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 		
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+   <link rel="stylesheet" href="../css/style.css">
   </head>
   <body>
+  
 		
 		<div class="wrapper d-flex align-items-stretch">
 			<nav id="sidebar">
@@ -18,21 +19,21 @@
 					<button type="button" id="sidebarCollapse" class="btn btn-primary">
 	        </button>
         </div>
-	  		<div class="img bg-wrap text-center py-4" style="background-image: url(images/bg_1.jpg);">
+	  		<div class="img bg-wrap text-center py-4" style="background-image: url('../images/bg_1.jpg');">
 	  			<div class="user-logo">
-	  				<div class="img" style="background-image: url(images/logo.jpg);"></div>
+	  				<div class="img" style="background-image: url('../images/logo.jpg');"></div>
 	  				<h3><b><%=name%></b></h3>
 	  			</div>
 	  		</div>
         <ul class="list-unstyled components mb-5">
           <li>
-            <a href="#"><span class="fa fa-home mr-3"></span> Home</a>
+           <a href="#"><span class="fa fa-home mr-3"></span> Home</a>
           </li>
-          <li class="active">
+          <li >
             <a href="#"><span class="fa fa-book mr-3"></span> Courses</a>
           </li>
-          <li>
-            <a href="#"><span class="fa fa-cog mr-3"></span> Settings</a>
+          <li class="active">
+            <a href="#"><span class="fa fa-cog mr-3"></span> My Courses</a>
           </li>
           <li>
             <a href="#"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
@@ -43,49 +44,51 @@
        
         <!-- Page Content  -->
       <div id="content" class="p-4 p-md-5 pt-5">
-      <% list.forEach(function(result){ %> 
-        <div class="tp">
-        <div class="card text-white bg-primary " style="width: 100%;">
-         
-          <div class="card-body">
-            <h5 class="card-title"><%=result.course_name%></h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-light " data-toggle="modal" data-target="#<%=result.course_teacher %>">Go somewhere</a>
+        <h1 class="btn btn-warning" style="width: 100%; font-size: xx-large;">Here are your Courses <%=name %>!!</h1> 
+        <br><br>
+        <% results.forEach(function(result){ %> 
+          <div class="tp">
+          <div class="card text-white bg-primary shadow p-3 mb-5  rounded" style="width: 100%;">
+           
+            <div class="card-body">
+              <h5 class="card-title text-white"><%=result[0].course_name%></h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-light " data-toggle="modal" data-target="#<%=result[0].course_teacher %>">Go somewhere</a>
+            </div>
           </div>
-        </div>
-        <div class="modal fade" id="<%= result.course_teacher%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle" name="course_name"><%=result.course_name%></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <%=result.course_info%>
-                <%=result.course_teacher%>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <form action="/stu_course" method="POST">
-                  <input type = "hidden" name = "subscribed_course_name" value = "<%=result.course_name %>" />
-                  <button type="submit" class="btn btn-primary">Subscribe</button>
-                </form>
-              </div>
-            </div> 
-          </div>  
-        </div>
-        <br>
-        </div>
-        
-        <% }) %>   
-		</div>
+          <div class="modal fade" id="<%= result[0].course_teacher%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle" name="course_name"><%=result[0].course_name%></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <%=result[0].course_info%>
+                  <%=result[0].course_teacher%>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <form action="/stu_course" method="POST">
+                    <input type = "hidden" name = "subscribed_course_name" value = "<%=result[0].course_name %>" />
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                  </form>
+                </div>
+              </div> 
+            </div>  
+          </div>
+          
+          </div>
+          
+          <% }) %>   
+      </div>
     
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/popper.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/main.js"></script>
   </body>
 </html>
 

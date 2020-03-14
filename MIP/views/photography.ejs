@@ -43,9 +43,11 @@
        
         <!-- Page Content  -->
       <div id="content" class="p-4 p-md-5 pt-5">
-      <% list.forEach(function(result){ %> 
+        <h1 class="btn btn-warning" style="width: 100%; font-size: xx-large;">Courses in <%= list[0].domain%> are:</h1> 
+        <br> <br>
+        <%list.forEach(function(result){ %> 
         <div class="tp">
-        <div class="card text-white bg-primary " style="width: 100%;">
+        <div class="card text-white bg-primary shadow p-3 mb-5  rounded" style="width: 100%;">
          
           <div class="card-body">
             <h5 class="card-title"><%=result.course_name%></h5>

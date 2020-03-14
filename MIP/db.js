@@ -340,11 +340,11 @@ app.get('/user/mycourses',(req,res)=>{
          var course_id = results2[i].my_course_id;
          //console.log(course_id);
          db.query('select * from courses where course_id=?',course_id,(err,results3,fields)=>{
-            console.log(results3);
+            //console.log(results3);
             courses.push(results3);
             if(courses.length == results2.length){
                console.log(courses);
-               res.render('stu_mycourses',{name:req.session.username,list:courses});
+               res.render('stu_mycourses',{name:req.session.username,results:courses});
             }
          });
          }
@@ -368,6 +368,7 @@ app.get('/photography',(request, response) =>{
             }
             
          }
+         console.log(list)
          response.render('photography',{name:request.session.username,results:list});
 
       })
