@@ -319,14 +319,34 @@ app.post('/stu_course',(req,res)=>{
                "my_course_id":course_id,
                "my_id":stu_id
             }
-            db.query('insert into my_subscribed_courses set ?',my_course_data,(err,results,fields)=>{
-              if(err) throw err;
+            let promise = new Promise((resolve,reject)=>{
+               db.query('select * from my_subscribed_courses',(err,results,fields)=>{
+               for(var i=0;i<results.length;i++){
+                  if(results[i].my_course_id == course_id && results[i].my_id == stu_id){
+                     resolve();
+                  }
+                  else if(results.length == i+1){
+                     reject();
+                  }
+               }
             });
+            })
+            promise.then(
+               ()=>{
+                  res.redirect('/user/mycourses');
+               },
+               ()=>{
+                  db.query('insert into my_subscribed_courses set ?',my_course_data,(err,results,fields)=>{
+                     if(err) throw err;
+                   });
+                   res.redirect('/user/mycourses');
+               }
+            )
+            
        });
        
     });
     
-      res.redirect('/user/mycourses');
 });
 
 app.get('/user/mycourses',(req,res)=>{
@@ -343,7 +363,7 @@ app.get('/user/mycourses',(req,res)=>{
             //console.log(results3);
             courses.push(results3);
             if(courses.length == results2.length){
-               console.log(courses);
+               //console.log(courses);
                res.render('stu_mycourses',{name:req.session.username,results:courses});
             }
          });
