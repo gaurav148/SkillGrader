@@ -310,7 +310,9 @@ app.get('/stu_course',(request, response) =>{
    });  
      
 app.post('/stu_course',(req,res)=>{
+   console.log("Reached stu_courses");
    var name = req.body.subscribed_course_name;
+   console.log(name);
       db.query('select * from courses where course_name = ?',name,(err ,results,fields)=>{
          var course_id = results[0].course_id;
          db.query('select id from login_student where username = ?',req.session.username,(err,results,fields)=>{
@@ -319,13 +321,22 @@ app.post('/stu_course',(req,res)=>{
                "my_course_id":course_id,
                "my_id":stu_id
             }
+            console.log(my_course_data);
             let promise = new Promise((resolve,reject)=>{
                db.query('select * from my_subscribed_courses',(err,results,fields)=>{
+               if(results.length == 0){
+                  db.query('insert into my_subscribed_courses set ?',my_course_data,(err,results,fields)=>{
+                     if(err) throw err;
+                   });
+                   res.redirect('/user/mycourses');
+               }
                for(var i=0;i<results.length;i++){
                   if(results[i].my_course_id == course_id && results[i].my_id == stu_id){
+                     console.log("Resolved");
                      resolve();
                   }
                   else if(results.length == i+1){
+                     console.log("Rejected");
                      reject();
                   }
                }
@@ -333,6 +344,7 @@ app.post('/stu_course',(req,res)=>{
             })
             promise.then(
                ()=>{
+                  console.log("subscribed");
                   res.redirect('/user/mycourses');
                },
                ()=>{
@@ -497,6 +509,22 @@ app.get('/sketching',(request, response) =>{
       
    }  
 });
+
+
+//unsubscription
+app.post('/unsubscribed',(req,res)=>{
+   var name = req.body.unsubscribed_course_name;
+   console.log(name);
+   db.query("SELECT * from courses where course_name = ?",name,(err,results,fields)=>{
+      var id = results[0].course_id;
+      console.log(id);
+      db.query("DELETE FROM my_subscribed_courses where my_course_id = ?",id,(err,results1,fields)=>{
+      
+      })
+   })
+
+   res.redirect('/user/mycourses');
+})
 
 
 
