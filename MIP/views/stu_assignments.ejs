@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Photography</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+		
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	        </button>
+        </div>
+	  		<div class="img bg-wrap text-center py-4" style="background-image: url(images/bg_1.jpg);">
+	  			<div class="user-logo">
+	  				<div class="img" style="background-image: url(images/logo.jpg);"></div>
+	  				<h3><b><%=name%></b></h3>
+	  			</div>
+	  		</div>
+        <ul class="list-unstyled components mb-5">
+          <li>
+            <a href="#"><span class="fa fa-home mr-3"></span> Home</a>
+          </li>
+          <li class="active">
+            <a href="#"><span class="fa fa-book mr-3"></span> Courses</a>
+          </li>
+          <li>
+            <a href="#"><span class="fa fa-cog mr-3"></span> Settings</a>
+          </li>
+          <li>
+            <a href="#"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
+          </li>
+        </ul>
+
+    	</nav>
+       
+        <!-- Page Content  -->
+        <div id="content" class="p-4 p-md-5">
+            <%results.forEach(function(result){%>
+            <div class="card">
+                <div class="card-header">
+                  <%=result.assignment_name%>
+                </div>
+                <div class="card-body" >
+                    <% if(result.assignment_type == 'video/mp4'){%>
+                        <video width="250" height="250" controls>
+                            <source src="../public/uploads/<%=result.assignment_desc%>" type="video/mp4">
+                            <source src="../public/uploads/<%=result.assignment_desc%>" type="video/ogg">
+                          Your browser does not support the video tag.
+                        </video>
+                    <%}%>
+                    <% if(result.assignment_type == 'image/png'){%>
+                       <img src="../public/uploads/<%=result.assignment_desc%>" style="width: 250px; height: 250px;">
+                    <%}%>
+                    <% if(result.assignment_type == 'image/jpeg'){%>
+                        <img src="../public/uploads/<%=result.assignment_desc%>" style="width: 250px; height: 250px;">
+                     <%}%>
+                    <% if(result.assignment_type == 'text/plain'){%>
+                        <iframe src="../public/uploads/<%=result.assignment_desc%>"></iframe>
+                    <%}%>
+                    <p class="card-text"><%=result.due_date%></p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div> <br> <br>
+              <% })%>
+	    </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
+
+

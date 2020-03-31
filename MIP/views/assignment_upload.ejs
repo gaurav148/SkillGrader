@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Photography</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+		
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	        </button>
+        </div>
+	  		<div class="img bg-wrap text-center py-4" style="background-image: url(images/bg_1.jpg);">
+	  			<div class="user-logo">
+	  				<div class="img" style="background-image: url(images/logo.jpg);"></div>
+	  				<h3><b><%=name%></b></h3>
+	  			</div>
+	  		</div>
+        <ul class="list-unstyled components mb-5">
+          <li>
+            <a href="#"><span class="fa fa-home mr-3"></span> Home</a>
+          </li>
+          <li class="active">
+            <a href="#"><span class="fa fa-book mr-3"></span> Courses</a>
+          </li>
+          <li>
+            <a href="#"><span class="fa fa-cog mr-3"></span> Settings</a>
+          </li>
+          <li>
+            <a href="#"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
+          </li>
+        </ul>
+
+    	</nav>
+       
+        <!-- Page Content  -->
+        <div id="content" class="p-4 p-md-5 pt-5">
+            <div class="container col-sm-12" id="mainform">
+                <div id="signupbox" style=" margin-top:50px" class="mainbox col-md-6 col-md-offset-2 col-md-8 ">                                     
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="panel-title">Upload Image</div>
+                        </div> 
+                        <div class="panel-body" >
+                            <form class="form-horizontal" role="form" method="post" action="/upload" enctype="multipart/form-data">
+                  
+                                 <div class="form-group">
+                
+                                    <div class="col-sm-9">
+                                        <input type="text" name="assignmentname" placeholder="Assignment Name" style="width: 100%;"><br><br>
+                                        <input type="text" name="duedate" placeholder="format:Month<space>day<space>Year,hrs:mins:seconds" style="width: 100%;""><br><br>
+                                        <input class="form-control" type="file" name="myfile" accept=""/><br>
+                                        <button id="btn-signup" type="submit" class="btn btn-info"> Upload</button>
+
+                                    </div>
+
+                                </div>                                
+                                                              
+                            </form>
+                         </div>
+                    </div>
+                </div>
+            </div>
+	    </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
+
+

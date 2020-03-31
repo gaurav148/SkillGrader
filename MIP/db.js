@@ -9,7 +9,18 @@ var bodyParser = require('body-parser');
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
 var js_alert = require("js-alert");
+var multer = require('multer')
+const DIR = './public/uploads';
+let storage = multer.diskStorage({
+   destination: function (req, file, callback) {
+     callback(null, DIR);
+   },
+   filename: function (req, file, cb) {
+     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+   }
+});
 
+let upload = multer({storage: storage});
 
 var db = mysql.createConnection({
 	host     : 'localhost',
@@ -527,10 +538,46 @@ app.post('/unsubscribed',(req,res)=>{
 })
 
 
-
-
-
 // assignment uploading module
+app.get('/upload',(req,res)=>{
+   if(req.session.tea_login){
+      res.render('assignment_upload',{name:req.session.username});
+   }
+});
+
+
+app.post('/upload',upload.single('myfile'), function (req, res) {
+   //console.log(req.file);
+   var due_date = new Date(req.body.duedate);
+   //console.log(due_date);
+   db.query("select course_id from courses where course_teacher =?",req.session.username,(err,results,fields)=>{
+      var courseid = results[0].course_id;
+      var File_data = {
+         "assignment_name" : req.body.assignmentname,
+         "assignment_desc" : req.file.filename,
+         "course_id" : courseid,
+         "due_date" : due_date,
+         "assignment_type" : req.file.mimetype
+         };
+         db.query('INSERT INTO assignments SET ?',File_data,(err,results,fields)=>{
+            if(err) throw err;
+         });
+         res.redirect('/upload');
+         });
+});
+
+
+//asignment visible to student 
+
+app.get('/assignment',(req,res)=>{
+      db.query('select id from login_student where username = ?',req.session.username,(err,results,fields)=>{
+      var studentid = results[0].id;
+      db.query('select distinct assignments.assignment_name,assignments.assignment_desc,assignments.due_date,assignments.assignment_type from assignments inner join my_subscribed_courses on assignments.course_id = my_subscribed_courses.my_course_id where my_subscribed_courses.my_course_id in (select distinct my_course_id from my_subscribed_courses where my_id = ?)',studentid,(err,results1,fields)=>{
+         if (err) throw err;
+         res.render('stu_assignments',{name:req.session.username,results:results1});
+      });
+   });
+});
 
 app.listen(3000);
    
