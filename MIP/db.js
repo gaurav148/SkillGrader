@@ -572,11 +572,57 @@ app.post('/upload',upload.single('myfile'), function (req, res) {
 app.get('/assignment',(req,res)=>{
       db.query('select id from login_student where username = ?',req.session.username,(err,results,fields)=>{
       var studentid = results[0].id;
-      db.query('select distinct assignments.assignment_name,assignments.assignment_desc,assignments.due_date,assignments.assignment_type from assignments inner join my_subscribed_courses on assignments.course_id = my_subscribed_courses.my_course_id where my_subscribed_courses.my_course_id in (select distinct my_course_id from my_subscribed_courses where my_id = ?)',studentid,(err,results1,fields)=>{
+      db.query('select distinct assignments.assignment_id,assignments.assignment_name,assignments.assignment_desc,assignments.due_date,assignments.assignment_type from assignments inner join my_subscribed_courses on assignments.course_id = my_subscribed_courses.my_course_id where my_subscribed_courses.my_course_id in (select distinct my_course_id from my_subscribed_courses where my_id = ?)',studentid,(err,results1,fields)=>{
          if (err) throw err;
          res.render('stu_assignments',{name:req.session.username,results:results1});
       });
    });
+});
+
+//Student uploading assignment
+
+app.post('/assignment',upload.single('submission_file'),function(req,res){
+   var assignment_id = req.body.assignment_id;
+   var assignment_name = req.body.assignment_name;
+   //console.log(assignment_id);
+   db.query("SELECT id,name from login_student where name = ?",req.session.username,(err,results,feilds)=>{
+      var stu_id = results[0].id;
+      var stu_name = results[0].name;
+      //console.log(stu_id);
+      var submission_data = {
+         "assignment_id" : assignment_id,
+         "stu_id" : stu_id,
+         "stu_name" : stu_name,
+         "assignment_type" : req.file.mimetype,
+         "assignment_name" : assignment_name,
+         "assignment_desc" : req.file.filename
+      };
+      db.query("INSERT into student_submission SET ?",submission_data,(err,results,feilds)=>{
+         if (err) throw err;
+      });
+   });
+   
+   //Delete assignment once done is pending
+   res.redirect('/assignment');
+
+});
+
+//teacher viewing submitted assignment
+
+app.get('/submissions',(req,res)=>{
+   if(req.session.tea_login){
+      db.query("Select course_id from courses where course_teacher = ?",req.session.username,(err,results,fields)=>{
+         var course_id = results[0].course_id;
+         console.log(course_id);
+         db.query("select assignment_desc,assignment_name,assignment_type,stu_id,stu_name from student_submission where assignment_id = ANY(select assignment_id from assignments where course_id = ?)",course_id,(err,results1,fields)=>{
+            console.log(results1);
+            console.log(typeof(results1));
+            res.render('tea_assignments',{name:req.session.username,results:results1});
+         });
+      });
+
+      
+   }
 });
 
 app.listen(3000);

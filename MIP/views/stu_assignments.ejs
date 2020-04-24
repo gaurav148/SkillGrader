@@ -49,7 +49,7 @@
             <div class="card">
                 <div class="card-header">
                   <%=result.assignment_name%>
-                </div>
+                </div> 
                 <div class="card-body" >
                     <% if(result.assignment_type == 'video/mp4'){%>
                         <video width="250" height="250" controls>
@@ -67,8 +67,16 @@
                     <% if(result.assignment_type == 'text/plain'){%>
                         <iframe src="../public/uploads/<%=result.assignment_desc%>"></iframe>
                     <%}%>
-                    <p class="card-text"><%=result.due_date%></p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <p class="card-text">Due Date:<%=result.due_date%></p>
+                    <br>
+                    <h4>Submission:</h4>
+                    <form action="/assignment" method="POST" enctype="multipart/form-data">
+                      <input class="form-control" type="file" name="submission_file" accept=""/><br>
+                      <input type = "hidden" name = "assignment_id" value = "<%=result.assignment_id %>" />
+                      <input type = "hidden" name = "assignment_name" value = "<%=result.assignment_name %>" />
+                      <button class="btn btn-primary">Submit</button>
+                    </form>
+                    
                 </div>
               </div> <br> <br>
               <% })%>
